@@ -1,9 +1,9 @@
-#!/bin/bash
-set -e
+#!/bin/bash -Eeu
+
+readonly IMAGE_NAME=cyberdojofoundation/ubuntu-build-essential:18.04
 
 readonly MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
-readonly EXPECTED=$(cat ${MY_DIR}/README.md | grep Version | cut -d'=' -f2 | cut -d']' -f1)
-readonly IMAGE_NAME=cyberdojofoundation/ubuntu-build-essential:18.04
+readonly EXPECTED=18.04
 readonly ACTUAL=$(docker run --rm -it ${IMAGE_NAME} sh -c '. /etc/os-release && echo ${VERSION_ID}')
 
 if echo "${ACTUAL}" | grep -q "${EXPECTED}"; then
@@ -11,5 +11,5 @@ if echo "${ACTUAL}" | grep -q "${EXPECTED}"; then
 else
   echo "VERSION EXPECTED: ${EXPECTED}"
   echo "VERSION   ACTUAL: ${ACTUAL}"
-  exit 1
+  exit 42
 fi
