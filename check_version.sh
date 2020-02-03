@@ -1,6 +1,9 @@
 #!/bin/bash -Eeu
 
-readonly IMAGE_NAME=cyberdojofoundation/ubuntu-build-essential:18.04
+readonly REGEX="image_name\": \"(.*)\""
+readonly JSON=`cat docker/image_name.json`
+[[ ${JSON} =~ ${REGEX} ]]
+readonly IMAGE_NAME="${BASH_REMATCH[1]}"
 
 readonly MY_DIR="$( cd "$( dirname "${0}" )" && pwd )"
 readonly EXPECTED=18.04
